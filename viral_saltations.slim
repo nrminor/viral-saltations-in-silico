@@ -1,17 +1,31 @@
 /* 
 
+This simulation is a simple first step that aims to depict viral evolution once the virus has infected infected a new host. It assumes:
+
+	1) Host/environment selection pressures are constant
+	2) SARS-CoV-2 will never be controlled and thus will evolve indefinitely.
+	3) The virus stays in one, spatially implicit location with unbounded available space, and does not move to other locations, i.e. body compartments.
+
+The purpose of this simulation is to practice SLiM syntax while also tinkering with some of the core settings governing how the virus will evolve within-host, e.g., the deleteriousness and beneficialness of mutations, the distributions mutation effects are drawn from, how recombination will need to work and how frequent it is, carrying capacity for density-dependent fitness scaling, etc.
+
+Eventually, the code here will be subsumed by a more expansive simulation that depicts bottlenecked viral populations migrating to new hosts, each with their own distributions of mutation effects and distributions. Some of these hosts will have consistently weak selection on deleterious alleles--or perhaps exceptionally strong selection for beneficial alleles--which may bring about a pattern similar to the SARS-CoV-2 phylogeny.
+
 */
 
-initialize () {
+//function (integer)gtfToCoords(string gtf_path) {};
 
-//	initializeSLiMOptions(nucleotideBased=T);
-//	defineConstant("L", initializeAncestralNucleotides("wuhan1.fasta"));
+initialize () {
+	
+	// start with the SARS-CoV-2 Wuhan-1 reference sequence
+	initializeSLiMOptions(nucleotideBased=T);
+	defineConstant("ancestral_fa", "wuhan1.fasta");
+	defineConstant("L", initializeAncestralNucleotides(ancestral_fasta));
 	
 	//set population parameters
 	defineConstant("K", 100); // population size / carrying capacity
 	defineConstant("mu", 1e-8); // deleterious mutation_rate
 	defineConstant("s", -0.005); // deleterious selection coefficient
-	defineConstant("g_size", 29999); // genome size this value + 1
+	defineConstant("g_size", L-1); // size of the genome
 	defineConstant("rho", 1e-8); // recombination_rate
 	
 	//set as nonWF model
@@ -21,13 +35,16 @@ initialize () {
 	initializeMutationRate(mu);
 	
 	//set s here to 0 because we need to calculate it manually
-	initializeMutationType("m1", 0.5, "f", 0.0);
+	initializeMutationType("m1", 0.5, "f", 0.0);				// non-coding
+	initializeMutationType("m2", 0.5, "f", 0.0);				// synonymous
+	initializeMutationType("m3", 0.1, "g", -0.03, 0.2);	// deleterious
+	initializeMutationType("m4", 0.8, "e", 0.1);				// beneficial
 	
 	//ensure mutations don't convert for tracking
 	m1.convertToSubstitution = F;
 	
 	// initialize a genomic element type for the haploid genome	
-	initializeGenomicElementType("g1", m1, 1);
+	initializeGenomicElementType("g1", m1, 1, mmKimura(1.8e-07, 6e-08));
 	
 	//initialize genome and recombination rate
 	initializeGenomicElement(g1, 0, g_size);
