@@ -1,0 +1,48 @@
+/* 
+
+*/
+
+initialize () {
+
+	//set population parameters
+	defineConstant("K", 100); // population size / carrying capacity
+	defineConstant("mu", 1e-8); // deleterious mutation_rate
+	defineConstant("s", -0.005); // deleterious selection coefficient
+	defineConstant("g_size", 29999); // genome size this value + 1
+	defineConstant("rho", 1e-8); // recombination_rate
+
+
+	//set as nonWF model
+	initializeSLiMModelType("nonWF");
+
+	//set mutation rate
+	initializeMutationRate(mu);
+	
+	//set s here to 0 because we need to calculate it manually
+	initializeMutationType("m1", 0.5, "f", 0.0);
+
+	//ensure mutations don't convert for tracking
+	m1.convertToSubstitution = F;	
+	
+	// initialize a genomic element type for the haploid genome	
+	initializeGenomicElementType("g1", m1, 1);
+	
+	//initialize genome and recombination rate
+	initializeGenomicElement(g1, 0, g_size);
+	initializeRecombinationRate(rho);
+
+}
+
+reproduction() {
+	subpop.addRecombinant(individual.genome1, NULL, NULL, NULL, NULL, NULL);
+}
+
+1 early() {
+	sim.addSubpop("p1", 500, haploid=T);
+}
+
+early() {
+	p1.fitnessScaling = K / p1.individualCount;
+}
+
+50000 late() { sim.outputFixedMutations(); }
