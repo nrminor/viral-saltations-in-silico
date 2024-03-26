@@ -128,6 +128,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/micromamba-1.5.8-0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/osx-64/mpc-1.3.1-h81bd1dd_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/mpfr-4.2.1-h0c69b56_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/osx-64/ncbi-datasets-cli-16.10.1-h694c41f_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/ncurses-6.4.20240210-h73e2aa4_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/openssl-3.2.1-hd75f5a5_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/pandoc-3.1.12.3-h694c41f_0.conda
@@ -1543,6 +1544,20 @@ packages:
   url: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl#sha256=4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d
   sha256: 4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d
   requires_python: '>=3.5'
+- kind: conda
+  name: ncbi-datasets-cli
+  version: 16.10.1
+  build: h694c41f_2
+  build_number: 2
+  subdir: osx-64
+  url: https://conda.anaconda.org/conda-forge/osx-64/ncbi-datasets-cli-16.10.1-h694c41f_2.conda
+  sha256: 72284515d54910ed6336cadbec929b94e680bda0d975c7046a08c4a703d8811f
+  md5: 99fc6cda2ade31fb07a44669daaaa24c
+  depends:
+  - ca-certificates
+  license: Public Domain
+  size: 32336540
+  timestamp: 1711400905262
 - kind: conda
   name: ncurses
   version: 6.4.20240210

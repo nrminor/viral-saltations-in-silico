@@ -13,6 +13,7 @@ python = "==3.12"
 r-base = ">=4.3.3,<4.4"
 r-tidyverse = ">=2.0.0,<2.1"
 slim = ">=4.2,<5"
+ncbi-datasets-cli = ">=16.10.1,<16.11"
 
 [pypi-dependencies]
 marimo = "*"
