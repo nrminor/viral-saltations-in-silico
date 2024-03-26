@@ -1,0 +1,22 @@
+[project]
+name = "viral-saltations-in-silico"
+version = "0.1.0"
+description = "Tracking viral genomic evolution in silico in search of the mechanisms behind SARS-CoV-2 Saltatory Lineages"
+authors = ["Nicholas Minor <nrminor@wisc.edu>"]
+channels = ["conda-forge"]
+platforms = ["osx-64"]
+
+[tasks]
+
+[dependencies]
+python = "==3.12"
+r-base = ">=4.3.3,<4.4"
+r-tidyverse = ">=2.0.0,<2.1"
+slim = ">=4.2,<5"
+
+[pypi-dependencies]
+marimo = "*"
+uv = "*"
+
+[build-dependencies]
+micromamba = ">=1.5.8,<1.6"

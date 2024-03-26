@@ -1,2 +1,8 @@
+.venv
 ._*
 .DS_Store
+
+poetry.lock
+# pixi environments
+.pixi
+
